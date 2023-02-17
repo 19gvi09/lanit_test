@@ -1,6 +1,5 @@
 export default function handler(req, res) {
   if (req.method === "POST") {
-    console.log(req.body)
     if (req.body.login != "Admin") {
       res.status(404).json({ error: "Login not found" })
       return

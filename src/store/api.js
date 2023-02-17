@@ -27,12 +27,12 @@ export const apiSlice = createApi({
       }
     }),
     updateProduct: builder.mutation({
-      query: (id, product) => ({
+      query: ({ id, ...product }) => ({
         url: `/products/${id}`,
         method: "PUT",
         body: product,
       }),
-      async onQueryStarted({ id, product }, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ id, ...product }, { dispatch, queryFulfilled }) {
         try {
           // В идеале обновляет объект в кэше на основе успешного запроса
           //const { data: updated } = await queryFulfilled

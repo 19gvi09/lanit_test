@@ -3,11 +3,12 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import Head from "next/head";
 import styles from "@/styles/Login.module.scss";
 import { useLoginMutation } from "@/store/loginApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 export default function Login() {
   const router = useRouter()
+  const [ form ] = Form.useForm()
   const [ showLoginError, setShowLoginError ] = useState(false)
   const [ showPasswordError, setShowPasswordError ] = useState(false)
   const [ login ] = useLoginMutation()
@@ -28,12 +29,17 @@ export default function Login() {
       default:
         break;
     }
+    form.validateFields()
   }
+
+  useEffect(() => {
+    if (showLoginError || showPasswordError) form.validateFields()
+  }, [showLoginError, showPasswordError])
 
   return (
     <>
       <Head>
-        <title>Login</title>
+        <title>Войти</title>
         <meta name="description" content="Login page" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -41,8 +47,8 @@ export default function Login() {
       <main>
         <Form
           name="login_form"
+          form={form}
           className={styles.form}
-          initialValues={{ remember: true }}
           onFinish={onLogin}
           autoComplete="off"
         >
@@ -52,19 +58,19 @@ export default function Login() {
             rules={[
               {
                 required: true,
-                message: "Please input your Username!"
+                message: "Введите логин"
               },
               {
                 validator: (_, value) => {
                   if (showLoginError) {
-                    return Promise.reject("Incorrect username")
+                    return Promise.reject("Неверный логин")
                   }
                   return Promise.resolve()
                 }
               }
             ]}
           >
-            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Логин" />
           </Form.Item>
           <Form.Item
             name="password"
@@ -72,12 +78,12 @@ export default function Login() {
             rules={[
               {
                 required: true,
-                message: "Please input your Password!"
+                message: "Введите пароль"
               },
               {
                 validator: (_, value) => {
                   if (showPasswordError) {
-                    return Promise.reject("Incorrect password")
+                    return Promise.reject("Неверный пароль")
                   }
                   return Promise.resolve()
                 }
@@ -87,13 +93,13 @@ export default function Login() {
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
-              placeholder="Password"
+              placeholder="Пароль"
             />
           </Form.Item>
 
           <Form.Item>
             <Button type="primary" htmlType="submit" className="login-form-button">
-              Log in
+              Войти
             </Button>
           </Form.Item>
         </Form>

@@ -77,7 +77,7 @@ export default function Data() {
   return (
     <>
       <Head>
-        <title>Data</title>
+        <title>Товары</title>
         <meta name="description" content="Data page" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

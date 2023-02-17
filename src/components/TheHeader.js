@@ -7,15 +7,15 @@ const { Header } = Layout;
 
 const menu_items = [
   {
-    label: <Link href="/">Home</Link>,
+    label: <Link href="/">Главная</Link>,
     key: "/",
   },
   {
-    label: <Link href="/data">Data</Link>,
+    label: <Link href="/data">Товары</Link>,
     key: "/data",
   },
   {
-    label: <Link href="/profile">Profile</Link>,
+    label: <Link href="/profile">Профиль</Link>,
     key: "/profile",
   },
 ]

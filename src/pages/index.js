@@ -1,16 +1,19 @@
-import Head from "next/head"
+import Head from "next/head";
+import { Typography } from "antd";
+
+const { Title } = Typography;
 
 export default function Home() {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>Главная</title>
         <meta name="description" content="Home page" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div>Home page</div>
+        <Title>Главная</Title>
       </main>
     </>
   )

@@ -8,14 +8,13 @@ export default function ProductModal({ isModalOpen, closeModal, type, product })
   const [ updateProduct ] = useUpdateProductMutation()
   const formSubmit = () => {
     form.validateFields().then((values) => {
-      console.log(values)
       form.resetFields();
       switch (type) {
         case "add":
           addProduct(values)
           break;
         case "update":
-          updateProduct(product.id, values)
+          updateProduct({ id: product.id, ...values })
           break;
         default:
           break;
@@ -24,12 +23,17 @@ export default function ProductModal({ isModalOpen, closeModal, type, product })
     closeModal()
   }
 
+  const handleCloseModal = () => {
+    form.resetFields()
+    closeModal()
+  }
+
   useEffect(() => {
     form.setFieldsValue(product)
   }, [product])
 
   return (
-    <Modal title={type === "add" ? "Добавить товар" : "Редактировать товар"} open={isModalOpen} onCancel={closeModal} onOk={formSubmit} okText={type === "add" ? "Добавить товар" : "Сохранить"} cancelText="Отмена">
+    <Modal title={type === "add" ? "Добавить товар" : "Редактировать товар"} open={isModalOpen} onCancel={handleCloseModal} onOk={formSubmit} okText={type === "add" ? "Добавить товар" : "Сохранить"} cancelText="Отмена">
       <Form form={form} name="login">
         <Form.Item name="title">
           <Input placeholder="Товар" />
